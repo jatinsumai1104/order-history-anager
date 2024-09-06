@@ -15,7 +15,7 @@ namespace :import do
       User.delete_all
       Product.delete_all
 
-
+      puts 'Importing Users'
       CSV.foreach("#{csv_path}/users.csv", headers: true) do |row|
         if row['USERNAME'].present? && row['EMAIL'].present? && row['PHONE'].present?
           users[row['EMAIL']] = User.new(name: row['USERNAME'], email: row['EMAIL'], phone: row['PHONE'])
@@ -23,12 +23,13 @@ namespace :import do
       end
       User.import(users.values)
 
+      puts 'Importing Products'
       CSV.foreach("#{csv_path}/products.csv", headers: true) do |row|
         products << Product.new(code: row['CODE'], name: row['NAME'], category: row['CATEGORY'])
       end
-
       Product.import(products)
 
+      puts 'Importing Orders'
       CSV.foreach("#{csv_path}/order_details.csv", headers: true) do |row|
         orders << Order.new(
           user_id: User.find_by_email(row['USER_EMAIL'])&.id,

@@ -1,22 +1,22 @@
-<div class="container">
-  <h1>User List</h1>
-  <table class="table">
-    <thead>
+<div class="container text-center align-middle fs-5">
+  <h1 class="p-4">User List</h1>
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
       <tr>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Phone Number</th>
-        <th>Action</th>
+        <th scope="col" class="align-middle">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone Number</th>
+        <th scope="col">Download Order CSV</th>
       </tr>
     </thead>
-    <tbody>
-      <% @users.each do |user| %>
+    <tbody class="table-group-divider align-middle">
+      <% @users.includes(:orders).each do |user| %>
         <tr>
-          <td><%= user.name %></td>
+          <td scope="row"><%= user.name %></td>
           <td><%= user.email %></td>
           <td><%= user.phone %></td>
           <td>
-            <%= link_to "Download Orders", download_orders_path(user.email), class: "btn btn-primary" %>
+            <%= link_to "Download Orders (#{user.orders.size})", download_orders_path(user.email), class: "btn btn-outline-dark" %>
           </td>
         </tr>
       <% end %>

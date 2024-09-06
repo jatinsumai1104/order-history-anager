@@ -20,6 +20,6 @@ class CsvGenerationWorker
       end
       File.write(file_path, csv_data)
     end
-    # ActionCable.server.broadcast("csv_notification_channel", { message: 'CSV is ready', file_path: file_path.to_s })
+    ActionCable.server.broadcast('order_history_channel', { message: 'CSV is ready', file_path: file_path.to_s })
   end
 end
