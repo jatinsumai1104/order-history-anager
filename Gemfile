@@ -57,6 +57,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'activerecord-import'
 
-gem 'sidekiq'
+gem 'sidekiq', "6.4"
 
 gem 'roo'
