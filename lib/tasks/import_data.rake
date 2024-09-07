@@ -22,18 +22,20 @@ namespace :import do
         end
       end
       User.import(users.values)
+      user_ids = User.pluck(:email, :id).to_h
 
       puts 'Importing Products'
       CSV.foreach("#{csv_path}/products.csv", headers: true) do |row|
         products << Product.new(code: row['CODE'], name: row['NAME'], category: row['CATEGORY'])
       end
       Product.import(products)
+      product_ids = Product.pluck(:code, :id).to_h
 
       puts 'Importing Orders'
       CSV.foreach("#{csv_path}/order_details.csv", headers: true) do |row|
         orders << Order.new(
-          user_id: User.find_by_email(row['USER_EMAIL'])&.id,
-          product_id: Product.find_or_create(code: row['PRODUCT_CODE'])&.id,
+          user_id: user_ids[row['USER_EMAIL']],
+          product_id: product_ids[row['PRODUCT_CODE']],
           order_date: Date.parse(row['ORDER_DATE'])
         )
       end
