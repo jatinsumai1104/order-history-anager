@@ -33,6 +33,10 @@ namespace :import do
 
       puts 'Importing Orders'
       CSV.foreach("#{csv_path}/order_details.csv", headers: true) do |row|
+        if product_ids[row['PRODUCT_CODE']].blank?
+          temp_product = Product.find_or_create!(code: row['PRODUCT_CODE'])
+          product_ids[row['PRODUCT_CODE']] = temp_product.id
+        end
         orders << Order.new(
           user_id: user_ids[row['USER_EMAIL']],
           product_id: product_ids[row['PRODUCT_CODE']],

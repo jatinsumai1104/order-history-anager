@@ -1,22 +1,29 @@
 <div class="container text-center align-middle fs-5">
   <h1 class="p-4">User List</h1>
-  <table class="table table-bordered table-hover">
+  <table id="users-table" class="table table-bordered table-hover">
     <thead class="table-dark">
       <tr>
-        <th scope="col" class="align-middle">Username</th>
-        <th scope="col">Email</th>
-        <th scope="col">Phone Number</th>
-        <th scope="col">Download Order CSV</th>
+        <th class="text-center" scope="col">Username</th>
+        <th class="text-center" scope="col">Email</th>
+        <th class="text-center" scope="col">Phone Number</th>
+        <th class="text-center" scope="col">Number of Orders</th>
+        <th class="text-center" scope="col">Actions</th>
       </tr>
     </thead>
     <tbody class="table-group-divider align-middle">
       <% @users.includes(:orders).each do |user| %>
         <tr>
-          <td scope="row"><%= user.name %></td>
-          <td><%= user.email %></td>
-          <td><%= user.phone %></td>
-          <td>
-            <%= link_to "Download Orders (#{user.orders.size})", download_orders_path(user.email), class: "btn btn-outline-dark" %>
+          <td class="text-center" scope="row"><%= user.name %></td>
+          <td class="text-center"><%= user.email %></td>
+          <td class="text-center"><%= user.phone %></td>
+          <td class="text-center"><%= user.orders.size %></td>
+          <td class="text-center">
+            <% if user.orders.size > 0 %>
+              <%= link_to "Download CSV", download_orders_path(user.email), remote: true, class: "btn btn-outline-dark", id: "liveToastBtn"%>
+            <% else %>
+              <button class="btn btn-outline-dark" disabled>No Orders to Download</button>
+            <% end %>
+
           </td>
         </tr>
       <% end %>
