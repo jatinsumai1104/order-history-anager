@@ -97,6 +97,11 @@ This Rails application manages the order history of users. It allows users to vi
 - Click on the "Download CSV" button next to a user to initiate the CSV generation process.
 - Once the CSV is ready, it will be automatically downloaded.
 
+### Screenshot
+
+Here’s a screenshot of the app in action:
+![App Screenshot](https://github.com/user-attachments/assets/bf8634cd-15f7-46d6-b6bb-27b683b55dee)
+
 ## Database Schema
 
 ### Tables
